@@ -1,30 +1,22 @@
-const celsiusElement = document.getElementById("celsius");
-const fahrenheitElement = document.getElementById("fahrenheit");
-const kelvinElement = document.getElementById("kelvin");
+const billAmountElement = document.querySelector("#bill");
+const tipPercentageElement = document.querySelector("#tip");
 
-function calculateTemperature(from) {
-  let celsius, fahrenheit, kelvin;
+function calculateTotal() {
+  const billValue = parseFloat(billAmountElement.value);
+  const tipValue = parseFloat(tipPercentageElement.value);
 
-  if (from === "C") {
-    celsius = Number(celsiusElement.value);
-    fahrenheit = (celsius * 9) / 5 + 32;
-    kelvin = celsius + 273.15;
+  const totalValue = billValue * (1 + tipValue / 100);
 
-    fahrenheitElement.value = fahrenheit.toFixed(2);
-    kelvinElement.value = kelvin.toFixed(2);
-  } else if (from === "F") {
-    fahrenheit = Number(fahrenheitElement.value);
-    celsius = ((fahrenheit - 32) * 5) / 9;
-    kelvin = celsius + 273.15;
-
-    celsiusElement.value = celsius.toFixed(2);
-    kelvinElement.value = kelvin.toFixed(2);
-  } else if (from === "K") {
-    kelvin = Number(kelvinElement.value);
-    celsius = kelvin - 273.15;
-    fahrenheit = (celsius * 9) / 5 + 32;
-
-    celsiusElement.value = celsius.toFixed(2);
-    fahrenheitElement.value = fahrenheit.toFixed(2);
+  if (isNaN(billValue) || isNaN(tipValue)) {
+    document.querySelector(".total").innerHTML = "Please input a value";
+    return;
   }
+
+  displayTotal(totalValue);
+}
+
+function displayTotal(totalValue) {
+  document.querySelector(
+    ".total"
+  ).innerHTML = `Total bill: $${totalValue.toFixed(2)}`;
 }
